@@ -23,4 +23,9 @@ app.append(beats);
 button.addEventListener("click", () => {
     counter++;
     beats.innerHTML = `<font size = "6">${counter} Beats</font>`;
-})
+});
+
+setInterval(() => {
+    counter++;
+    beats.innerHTML = `<font size = "6">${counter} Beats</font>`;
+}, 1000);
