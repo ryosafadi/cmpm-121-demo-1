@@ -25,7 +25,17 @@ button.addEventListener("click", () => {
     beats.innerHTML = `<font size = "6">${counter} Beats</font>`;
 });
 
-setInterval(() => {
-    counter++;
-    beats.innerHTML = `<font size = "6">${counter} Beats</font>`;
-}, 1000);
+let previousTime = performance.now();
+
+function updateCounter(currentTime: number) {
+    const deltaTime = (currentTime - previousTime) / 1000;
+    previousTime = currentTime;
+
+    counter += deltaTime; 
+
+    beats.innerHTML = `<font size="6">${Math.floor(counter)} Beats</font>`;
+
+    requestAnimationFrame(updateCounter);
+}
+
+requestAnimationFrame(updateCounter);
