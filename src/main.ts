@@ -25,18 +25,22 @@ const growthRate = document.createElement("div");
 growthRate.innerHTML = `<font size = "6">(${growthMult} beats/sec)</font>`;
 app.append(growthRate);
 
+let upgradeACost: number = 10;
+let upgradeBCost: number = 100;
+let upgradeCCost: number = 1000;
+
 const beatUpgradeA = document.createElement("button");
-beatUpgradeA.innerHTML = '<font size = "5">Increase Autobeats (by 0.1 units/sec)</font>';
+beatUpgradeA.innerHTML = `<font size = "5">Increase Autobeats (by 0.1 units/sec) (Cost: ${upgradeACost} beats)</font>`;
 app.append(beatUpgradeA);
 beatUpgradeA.disabled = true;
 
 const beatUpgradeB = document.createElement("button");
-beatUpgradeB.innerHTML = '<font size = "5">Increase Autobeats (by 2 units/sec)</font>';
+beatUpgradeB.innerHTML = `<font size = "5">Increase Autobeats (by 2 units/sec) (Cost: ${upgradeBCost} beats)</font>`;
 app.append(beatUpgradeB);
 beatUpgradeB.disabled = true;
 
 const beatUpgradeC = document.createElement("button");
-beatUpgradeC.innerHTML = '<font size = "5">Increase Autobeats (by 50 units/sec)</font>';
+beatUpgradeC.innerHTML = `<font size = "5">Increase Autobeats (by 50 units/sec) (Cost: ${upgradeCCost} beats)</font>`;
 app.append(beatUpgradeC);
 beatUpgradeC.disabled = true;
 
@@ -64,29 +68,35 @@ beatButton.addEventListener("click", () => {
 
 //Event Listeners to increase beat growth rate when respective button is clicked
 beatUpgradeA.addEventListener("click", () => {
-    counter -= 10;
+    counter -= upgradeACost;
     growthMult += 0.1;
     upgradeAPurchases++;
+    upgradeACost *= 1.15;
 
     aPurchasesText.innerHTML = `<font size = "6">You have purchased Upgrade A ${upgradeAPurchases} times</font>`;
+    beatUpgradeA.innerHTML = `<font size = "5">Increase Autobeats (by 0.1 units/sec) (Cost: ${upgradeACost} beats)</font>`;
     growthRate.innerHTML = `<font size = "6">(${growthMult.toFixed(1)} beats/sec)</font>`;
 });
 
 beatUpgradeB.addEventListener("click", () => {
-    counter -= 100;
+    counter -= upgradeBCost;
     growthMult += 2;
     upgradeBPurchases++;
+    upgradeBCost *= 1.15;
 
     bPurchasesText.innerHTML = `<font size = "6">You have purchased Upgrade B ${upgradeBPurchases} times</font>`;
+    beatUpgradeB.innerHTML = `<font size = "5">Increase Autobeats (by 2 units/sec) (Cost: ${upgradeBCost} beats)</font>`;
     growthRate.innerHTML = `<font size = "6">(${growthMult.toFixed(1)} beats/sec)</font>`;
 });
 
 beatUpgradeC.addEventListener("click", () => {
-    counter -= 1000;
+    counter -= upgradeCCost;
     growthMult += 50;
     upgradeCPurchases++;
+    upgradeCCost *= 1.15;
 
     cPurchasesText.innerHTML = `<font size = "6">You have purchased Upgrade C ${upgradeCPurchases} times</font>`;
+    beatUpgradeC.innerHTML = `<font size = "5">Increase Autobeats (by 50 units/sec) (Cost: ${upgradeCCost} beats)</font>`;
     growthRate.innerHTML = `<font size = "6">(${growthMult.toFixed(1)} beats/sec</font>)`;
 });
 
@@ -105,13 +115,13 @@ function updateCounter(currentTime: number) {
 }
 
 function checkVars() {
-    if (counter >= 10) beatUpgradeA.disabled = false;
+    if (counter >= upgradeACost) beatUpgradeA.disabled = false;
     else beatUpgradeA.disabled = true;
 
-    if (counter >= 100) beatUpgradeB.disabled = false;
+    if (counter >= upgradeBCost) beatUpgradeB.disabled = false;
     else beatUpgradeB.disabled = true;
 
-    if (counter >= 1000) beatUpgradeC.disabled = false;
+    if (counter >= upgradeCCost) beatUpgradeC.disabled = false;
     else beatUpgradeC.disabled = true;
 
     requestAnimationFrame(checkVars);
