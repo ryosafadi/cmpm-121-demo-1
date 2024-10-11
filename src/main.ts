@@ -33,6 +33,7 @@ beatButton.addEventListener("click", () => {
 
 interface Item {
     name: string,
+    description: string,
     cost: number,
     rate: number,
     purchases: number,
@@ -40,14 +41,17 @@ interface Item {
     display: HTMLDivElement
 };
 
-const availableItems : Item[] = [
-    {name: "Autopedal", cost: 10, rate: 0.1, purchases: 0, button: document.createElement("button"), display: document.createElement("div")},
-    {name: "Extra Arm", cost: 100, rate: 2, purchases: 0, button: document.createElement("button"), display: document.createElement("div")},
-    {name: "Bonobo", cost: 1000, rate: 50, purchases: 0, button: document.createElement("button"), display: document.createElement("div")}
+const availableItems: Item[] = [
+    {name: "Autopedal", description: "Let your foot take a break as the autopedal keeps the beat!", cost: 10, rate: 0.1, purchases: 0, button: document.createElement("button"), display: document.createElement("div")},
+    {name: "Extra Arm", description: "Need a hand? How about an extra arm for those tricky solos!", cost: 100, rate: 2, purchases: 0, button: document.createElement("button"), display: document.createElement("div")},
+    {name: "Bonobo", description: "A curious Bonobo who knows just how to hit those drums.", cost: 1000, rate: 50, purchases: 0, button: document.createElement("button"), display: document.createElement("div")},
+    {name: "Magic Drumstick", description: "These enchanted sticks allow you to drum faster than ever before!", cost: 10000, rate: 200, purchases: 0, button: document.createElement("button"), display: document.createElement("div")},
+    {name: "Drum Machine AI", description: "An artificial intelligence to help you create complex rhythms effortlessly.", cost: 100000, rate: 5000, purchases: 0, button: document.createElement("button"), display: document.createElement("div")}
 ];
 
 for (const item of availableItems) {
     item.button.innerHTML = `${item.name} (Cost: ${item.cost} beats)`;
+    item.button.title = item.description; //Flavor text when the button is hovered
     app.append(item.button);
     item.button.disabled = true;
 
@@ -73,11 +77,11 @@ for (const item of availableItems) {
 }
 
 const cheatButton = document.createElement("button");
-cheatButton.innerHTML = 'Cheat: Instant 1000 beats!';
+cheatButton.innerHTML = 'Cheat: Instant 100000 beats!';
 app.append(cheatButton);
 
 cheatButton.addEventListener("click", () => {
-    counter += 1000;
+    counter += 100000;
     beats.innerHTML = `<font size = "6">${counter} Beats</font>`;
 });
 
