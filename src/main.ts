@@ -2,7 +2,7 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "Incremental Game Project";
+const gameName = "Drummin'!";
 document.title = gameName;
 
 const header = document.createElement("h1");
@@ -22,43 +22,43 @@ app.append(beats);
 let growthMult: number = 0;
 
 const growthRate = document.createElement("div");
-growthRate.innerHTML = `<font size = "6">(${growthMult} beats/sec)</font>`;
+growthRate.innerHTML = `<font size = "6">(${growthMult} beats/second)</font>`;
 app.append(growthRate);
 
-let upgradeACost: number = 10;
-let upgradeBCost: number = 100;
-let upgradeCCost: number = 1000;
+let pedalUpgrade: number = 10;
+let armUpgrade: number = 100;
+let bonoboUpgrade: number = 1000;
 
-const beatUpgradeA = document.createElement("button");
-beatUpgradeA.innerHTML = `<font size = "5">Increase Autobeats (by 0.1 units/sec) (Cost: ${upgradeACost} beats)</font>`;
-app.append(beatUpgradeA);
-beatUpgradeA.disabled = true;
+const pedalButton = document.createElement("button");
+pedalButton.innerHTML = `<font size = "5">Autopedal (0.1 units/sec) (Cost: ${pedalUpgrade} beats)</font>`;
+app.append(pedalButton);
+pedalButton.disabled = true;
 
-const beatUpgradeB = document.createElement("button");
-beatUpgradeB.innerHTML = `<font size = "5">Increase Autobeats (by 2 units/sec) (Cost: ${upgradeBCost} beats)</font>`;
-app.append(beatUpgradeB);
-beatUpgradeB.disabled = true;
+const armButton = document.createElement("button");
+armButton.innerHTML = `<font size = "5">Extra Arm (2 units/sec) (Cost: ${armUpgrade} beats)</font>`;
+app.append(armButton);
+armButton.disabled = true;
 
-const beatUpgradeC = document.createElement("button");
-beatUpgradeC.innerHTML = `<font size = "5">Increase Autobeats (by 50 units/sec) (Cost: ${upgradeCCost} beats)</font>`;
-app.append(beatUpgradeC);
-beatUpgradeC.disabled = true;
+const bonoboButton = document.createElement("button");
+bonoboButton.innerHTML = `<font size = "5">Bonobo! (50 units/sec) (Cost: ${bonoboUpgrade} beats)</font>`;
+app.append(bonoboButton);
+bonoboButton.disabled = true;
 
-let upgradeAPurchases: number = 0;
-let upgradeBPurchases: number = 0;
-let upgradeCPurchases: number = 0;
+let pedalPurchases: number = 0;
+let armPurchases: number = 0;
+let bonoboPurchases: number = 0;
 
-const aPurchasesText = document.createElement("div");
-aPurchasesText.innerHTML = `<font size = "6">You have purchased Upgrade A ${upgradeAPurchases} times</font>`;
-app.append(aPurchasesText);
+const pedalCount = document.createElement("div");
+pedalCount.innerHTML = `<font size = "6">You have upgraded the autopedal ${pedalPurchases} times</font>`;
+app.append(pedalCount);
 
-const bPurchasesText = document.createElement("div");
-bPurchasesText.innerHTML = `<font size = "6">You have purchased Upgrade B ${upgradeBPurchases} times</font>`;
-app.append(bPurchasesText);
+const armCount = document.createElement("div");
+armCount.innerHTML = `<font size = "6">You have ${armPurchases} extra arms</font>`;
+app.append(armCount);
 
-const cPurchasesText = document.createElement("div");
-cPurchasesText.innerHTML = `<font size = "6">You have purchased Upgrade C ${upgradeCPurchases} times</font>`;
-app.append(cPurchasesText);
+const bonoboCount = document.createElement("div");
+bonoboCount.innerHTML = `<font size = "6">You have ${bonoboPurchases} bonobos</font>`;
+app.append(bonoboCount);
 
 //Event Listener to increment counter when button is clicked
 beatButton.addEventListener("click", () => {
@@ -67,36 +67,36 @@ beatButton.addEventListener("click", () => {
 });
 
 //Event Listeners to increase beat growth rate when respective button is clicked
-beatUpgradeA.addEventListener("click", () => {
-    counter -= upgradeACost;
+pedalButton.addEventListener("click", () => {
+    counter -= pedalUpgrade;
     growthMult += 0.1;
-    upgradeAPurchases++;
-    upgradeACost *= 1.15;
+    pedalPurchases++;
+    pedalUpgrade *= 1.15;
 
-    aPurchasesText.innerHTML = `<font size = "6">You have purchased Upgrade A ${upgradeAPurchases} times</font>`;
-    beatUpgradeA.innerHTML = `<font size = "5">Increase Autobeats (by 0.1 units/sec) (Cost: ${upgradeACost} beats)</font>`;
+    pedalCount.innerHTML = `<font size = "6">You have upgraded the autopedal ${pedalPurchases} times</font>`;
+    pedalButton.innerHTML = `<font size = "5">Autopedal (0.1 units/sec) (Cost: ${pedalUpgrade} beats)</font>`;
     growthRate.innerHTML = `<font size = "6">(${growthMult.toFixed(1)} beats/sec)</font>`;
 });
 
-beatUpgradeB.addEventListener("click", () => {
-    counter -= upgradeBCost;
+armButton.addEventListener("click", () => {
+    counter -= armUpgrade;
     growthMult += 2;
-    upgradeBPurchases++;
-    upgradeBCost *= 1.15;
+    armPurchases++;
+    armUpgrade *= 1.15;
 
-    bPurchasesText.innerHTML = `<font size = "6">You have purchased Upgrade B ${upgradeBPurchases} times</font>`;
-    beatUpgradeB.innerHTML = `<font size = "5">Increase Autobeats (by 2 units/sec) (Cost: ${upgradeBCost} beats)</font>`;
+    armCount.innerHTML = `<font size = "6">You have ${armPurchases} extra arms</font>`;
+    armButton.innerHTML = `<font size = "5">Extra Arm (2 units/sec) (Cost: ${armUpgrade} beats)</font>`;
     growthRate.innerHTML = `<font size = "6">(${growthMult.toFixed(1)} beats/sec)</font>`;
 });
 
-beatUpgradeC.addEventListener("click", () => {
-    counter -= upgradeCCost;
+bonoboButton.addEventListener("click", () => {
+    counter -= bonoboUpgrade;
     growthMult += 50;
-    upgradeCPurchases++;
-    upgradeCCost *= 1.15;
+    bonoboPurchases++;
+    bonoboUpgrade *= 1.15;
 
-    cPurchasesText.innerHTML = `<font size = "6">You have purchased Upgrade C ${upgradeCPurchases} times</font>`;
-    beatUpgradeC.innerHTML = `<font size = "5">Increase Autobeats (by 50 units/sec) (Cost: ${upgradeCCost} beats)</font>`;
+    bonoboCount.innerHTML = `<font size = "6">You have ${bonoboPurchases} bonobos</font>`;
+    bonoboButton.innerHTML = `<font size = "5">Bonobo! (50 units/sec) (Cost: ${bonoboUpgrade} beats)</font>`;
     growthRate.innerHTML = `<font size = "6">(${growthMult.toFixed(1)} beats/sec</font>)`;
 });
 
@@ -115,14 +115,14 @@ function updateCounter(currentTime: number) {
 }
 
 function checkVars() {
-    if (counter >= upgradeACost) beatUpgradeA.disabled = false;
-    else beatUpgradeA.disabled = true;
+    if (counter >= pedalUpgrade) pedalButton.disabled = false;
+    else pedalButton.disabled = true;
 
-    if (counter >= upgradeBCost) beatUpgradeB.disabled = false;
-    else beatUpgradeB.disabled = true;
+    if (counter >= armUpgrade) armButton.disabled = false;
+    else armButton.disabled = true;
 
-    if (counter >= upgradeCCost) beatUpgradeC.disabled = false;
-    else beatUpgradeC.disabled = true;
+    if (counter >= bonoboUpgrade) bonoboButton.disabled = false;
+    else bonoboButton.disabled = true;
 
     requestAnimationFrame(checkVars);
 }
