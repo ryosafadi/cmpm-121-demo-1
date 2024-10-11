@@ -25,79 +25,60 @@ const growthRate = document.createElement("div");
 growthRate.innerHTML = `<font size = "6">(${growthMult} beats/second)</font>`;
 app.append(growthRate);
 
-let pedalUpgrade: number = 10;
-let armUpgrade: number = 100;
-let bonoboUpgrade: number = 1000;
-
-const pedalButton = document.createElement("button");
-pedalButton.innerHTML = `<font size = "5">Autopedal (0.1 units/sec) (Cost: ${pedalUpgrade} beats)</font>`;
-app.append(pedalButton);
-pedalButton.disabled = true;
-
-const armButton = document.createElement("button");
-armButton.innerHTML = `<font size = "5">Extra Arm (2 units/sec) (Cost: ${armUpgrade} beats)</font>`;
-app.append(armButton);
-armButton.disabled = true;
-
-const bonoboButton = document.createElement("button");
-bonoboButton.innerHTML = `<font size = "5">Bonobo! (50 units/sec) (Cost: ${bonoboUpgrade} beats)</font>`;
-app.append(bonoboButton);
-bonoboButton.disabled = true;
-
-let pedalPurchases: number = 0;
-let armPurchases: number = 0;
-let bonoboPurchases: number = 0;
-
-const pedalCount = document.createElement("div");
-pedalCount.innerHTML = `<font size = "6">You have upgraded the autopedal ${pedalPurchases} times</font>`;
-app.append(pedalCount);
-
-const armCount = document.createElement("div");
-armCount.innerHTML = `<font size = "6">You have ${armPurchases} extra arms</font>`;
-app.append(armCount);
-
-const bonoboCount = document.createElement("div");
-bonoboCount.innerHTML = `<font size = "6">You have ${bonoboPurchases} bonobos</font>`;
-app.append(bonoboCount);
-
 //Event Listener to increment counter when button is clicked
 beatButton.addEventListener("click", () => {
     counter++;
     beats.innerHTML = `<font size = "6">${counter} Beats</font>`;
 });
 
-//Event Listeners to increase beat growth rate when respective button is clicked
-pedalButton.addEventListener("click", () => {
-    counter -= pedalUpgrade;
-    growthMult += 0.1;
-    pedalPurchases++;
-    pedalUpgrade *= 1.15;
+interface Item {
+    name: string,
+    cost: number,
+    rate: number,
+    purchases: number,
+    button: HTMLButtonElement
+    display: HTMLDivElement
+};
 
-    pedalCount.innerHTML = `<font size = "6">You have upgraded the autopedal ${pedalPurchases} times</font>`;
-    pedalButton.innerHTML = `<font size = "5">Autopedal (0.1 units/sec) (Cost: ${pedalUpgrade} beats)</font>`;
-    growthRate.innerHTML = `<font size = "6">(${growthMult.toFixed(1)} beats/sec)</font>`;
-});
+const availableItems : Item[] = [
+    {name: "Autopedal", cost: 10, rate: 0.1, purchases: 0, button: document.createElement("button"), display: document.createElement("div")},
+    {name: "Extra Arm", cost: 100, rate: 2, purchases: 0, button: document.createElement("button"), display: document.createElement("div")},
+    {name: "Bonobo", cost: 1000, rate: 50, purchases: 0, button: document.createElement("button"), display: document.createElement("div")}
+];
 
-armButton.addEventListener("click", () => {
-    counter -= armUpgrade;
-    growthMult += 2;
-    armPurchases++;
-    armUpgrade *= 1.15;
+for (const item of availableItems) {
+    item.button.innerHTML = `${item.name} (Cost: ${item.cost} beats)`;
+    app.append(item.button);
+    item.button.disabled = true;
 
-    armCount.innerHTML = `<font size = "6">You have ${armPurchases} extra arms</font>`;
-    armButton.innerHTML = `<font size = "5">Extra Arm (2 units/sec) (Cost: ${armUpgrade} beats)</font>`;
-    growthRate.innerHTML = `<font size = "6">(${growthMult.toFixed(1)} beats/sec)</font>`;
-});
+    item.button.addEventListener("click", () => {
+        counter -= item.cost;
+        growthMult += item.rate;
+        item.purchases++;
+        item.cost *= 1.15;
 
-bonoboButton.addEventListener("click", () => {
-    counter -= bonoboUpgrade;
-    growthMult += 50;
-    bonoboPurchases++;
-    bonoboUpgrade *= 1.15;
+        item.button.innerHTML = `${item.name} (Cost: ${item.cost.toFixed(2)} beats)`;
+        growthRate.innerHTML = `<font size = "6">(${growthMult.toFixed(1)} beats/sec)</font>`;
+    });
+}
 
-    bonoboCount.innerHTML = `<font size = "6">You have ${bonoboPurchases} bonobos</font>`;
-    bonoboButton.innerHTML = `<font size = "5">Bonobo! (50 units/sec) (Cost: ${bonoboUpgrade} beats)</font>`;
-    growthRate.innerHTML = `<font size = "6">(${growthMult.toFixed(1)} beats/sec</font>)`;
+for (const item of availableItems) {
+    item.display = document.createElement("div");
+    item.display.innerHTML = `You have purchased ${item.purchases} ${item.name}s`;
+    app.append(item.display);
+
+    item.button.addEventListener("click", () => {
+        item.display.innerHTML = `You have purchased ${item.purchases} ${item.name}s`;
+    })
+}
+
+const cheatButton = document.createElement("button");
+cheatButton.innerHTML = 'Cheat: Instant 1000 beats!';
+app.append(cheatButton);
+
+cheatButton.addEventListener("click", () => {
+    counter += 1000;
+    beats.innerHTML = `<font size = "6">${counter} Beats</font>`;
 });
 
 //Update counter by the proper amount every frame
@@ -115,15 +96,11 @@ function updateCounter(currentTime: number) {
 }
 
 function checkVars() {
-    if (counter >= pedalUpgrade) pedalButton.disabled = false;
-    else pedalButton.disabled = true;
-
-    if (counter >= armUpgrade) armButton.disabled = false;
-    else armButton.disabled = true;
-
-    if (counter >= bonoboUpgrade) bonoboButton.disabled = false;
-    else bonoboButton.disabled = true;
-
+    for (const item of availableItems) {
+        if (counter >= item.cost) item.button.disabled = false;
+        else item.button.disabled = true;
+    }
+    
     requestAnimationFrame(checkVars);
 }
 
