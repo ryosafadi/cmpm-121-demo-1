@@ -95,7 +95,6 @@ const COST_MULT = 1.15;
 for (const item of availableItems) {
   item.button.innerHTML = `${item.name} (Cost: ${item.cost} beats)`;
   item.button.title = item.description;
-  app.append(item.button);
   item.button.disabled = true;
 
   item.button.addEventListener("click", () => {
@@ -105,18 +104,21 @@ for (const item of availableItems) {
     item.cost *= COST_MULT;
 
     item.button.innerHTML = `${item.name} (Cost: ${item.cost.toFixed(2)} beats)`;
-    growthRate.innerHTML = `<font size = "6">(${growthMult.toFixed(1)} beats/sec)</font>`;
+    growthRate.innerHTML = `<font size="6">(${growthMult.toFixed(1)} beats/sec)</font>`;
+    
+    item.display.innerHTML = `You have purchased ${item.purchases} ${item.name}(s)`;
   });
+
+  item.display = document.createElement("div");
+  item.display.innerHTML = `You have purchased ${item.purchases} ${item.name}(s)`;
 }
 
 for (const item of availableItems) {
-  item.display = document.createElement("div");
-  item.display.innerHTML = `You have purchased ${item.purchases} ${item.name}s`;
-  app.append(item.display);
+  app.append(item.button);
+}
 
-  item.button.addEventListener("click", () => {
-    item.display.innerHTML = `You have purchased ${item.purchases} ${item.name}s`;
-  });
+for (const item of availableItems) {
+  app.append(item.display);
 }
 
 const CHEAT_AMOUNT = 100000;
