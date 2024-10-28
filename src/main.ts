@@ -25,7 +25,6 @@ const growthRate = document.createElement("div");
 growthRate.innerHTML = `<font size = "6">(${growthMult} beats/second)</font>`;
 app.append(growthRate);
 
-//Event Listener to increment counter when button is clicked
 beatButton.addEventListener("click", () => {
   counter++;
   beats.innerHTML = `<font size = "6">${counter} Beats</font>`;
@@ -95,7 +94,7 @@ const COST_MULT = 1.15;
 
 for (const item of availableItems) {
   item.button.innerHTML = `${item.name} (Cost: ${item.cost} beats)`;
-  item.button.title = item.description; //Flavor text when the button is hovered
+  item.button.title = item.description;
   app.append(item.button);
   item.button.disabled = true;
 
@@ -131,7 +130,6 @@ cheatButton.addEventListener("click", () => {
   beats.innerHTML = `<font size = "6">${counter} Beats</font>`;
 });
 
-//Update counter by the proper amount every frame
 let previousTime = performance.now();
 
 function updateCounter(currentTime: number) {
