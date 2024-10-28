@@ -91,6 +91,8 @@ const availableItems: Item[] = [
   },
 ];
 
+const COST_MULT = 1.15;
+
 for (const item of availableItems) {
   item.button.innerHTML = `${item.name} (Cost: ${item.cost} beats)`;
   item.button.title = item.description; //Flavor text when the button is hovered
@@ -101,7 +103,7 @@ for (const item of availableItems) {
     counter -= item.cost;
     growthMult += item.rate;
     item.purchases++;
-    item.cost *= 1.15;
+    item.cost *= COST_MULT;
 
     item.button.innerHTML = `${item.name} (Cost: ${item.cost.toFixed(2)} beats)`;
     growthRate.innerHTML = `<font size = "6">(${growthMult.toFixed(1)} beats/sec)</font>`;
@@ -118,12 +120,14 @@ for (const item of availableItems) {
   });
 }
 
+const CHEAT_AMOUNT = 100000;
+
 const cheatButton = document.createElement("button");
-cheatButton.innerHTML = "Cheat: Instant 100000 beats!";
+cheatButton.innerHTML = `Cheat: Instant ${CHEAT_AMOUNT} beats!`;
 app.append(cheatButton);
 
 cheatButton.addEventListener("click", () => {
-  counter += 100000;
+  counter += CHEAT_AMOUNT;
   beats.innerHTML = `<font size = "6">${counter} Beats</font>`;
 });
 
