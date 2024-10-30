@@ -9,8 +9,8 @@ const header = document.createElement("h1");
 header.innerHTML = gameName;
 app.append(header);
 
-const beatButton = document.createElement("button");
-beatButton.innerHTML = '<font size = "20">🥁</font>';
+const beatButton = document.createElement("h2");
+beatButton.innerHTML = '🥁';
 app.append(beatButton);
 
 let counter: number = 0;
@@ -26,8 +26,14 @@ growthRate.innerHTML = `<font size = "6">(${growthMult} beats/second)</font>`;
 app.append(growthRate);
 
 beatButton.addEventListener("click", () => {
+  beatButton.classList.add("shake"); // Inspired by: https://github.com/rozy-dixon/cmpm-121-demo-1/blob/main/src/main.ts
+
   counter++;
   beats.innerHTML = `<font size = "6">${counter} Beats</font>`;
+
+  setTimeout(() => {
+    beatButton.classList.remove("shake");
+  }, 200);
 });
 
 interface Item {
