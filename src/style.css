@@ -40,7 +40,9 @@ h2 {
   display: inline-block;
   font-size: 6em;
   margin: 0.3em;
-  cursor: url("/resource/notes.png") 16 16, auto; /* Inspired by: https://github.com/6YuQing6/cat-fishing-cmpm121-demo1/blob/main/src/style.css */
+  cursor:
+    url("/resource/notes.png") 16 16,
+    auto; /* Inspired by: https://github.com/6YuQing6/cat-fishing-cmpm121-demo1/blob/main/src/style.css */
 }
 
 #app {
@@ -74,8 +76,13 @@ button:focus-visible {
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(5px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
 }
 
 .shake {

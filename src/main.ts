@@ -10,7 +10,7 @@ header.innerHTML = gameName;
 app.append(header);
 
 const beatButton = document.createElement("h2");
-beatButton.innerHTML = '🥁';
+beatButton.innerHTML = "🥁";
 app.append(beatButton);
 
 let counter: number = 0;
@@ -29,9 +29,13 @@ beatButton.addEventListener("click", (e) => {
   e.stopPropagation();
   beatButton.style.animation = "shake 0.1s"; // Inspired by: https://github.com/rozy-dixon/cmpm-121-demo-1/blob/main/src/main.ts
 
-  beatButton.addEventListener("animationend", () => {
-    beatButton.style.animation = "none";
-  }, { once: true });
+  beatButton.addEventListener(
+    "animationend",
+    () => {
+      beatButton.style.animation = "none";
+    },
+    { once: true },
+  );
 
   counter++;
   beats.innerHTML = `<font size = "6">${counter} Beats</font>`;
@@ -112,7 +116,7 @@ for (const item of availableItems) {
 
     item.button.innerHTML = `${item.name} (Cost: ${item.cost.toFixed(2)} beats)`;
     growthRate.innerHTML = `<font size="6">(${growthMult.toFixed(1)} beats/sec)</font>`;
-    
+
     item.display.innerHTML = `You have purchased ${item.purchases} ${item.name}(s)`;
   });
 
