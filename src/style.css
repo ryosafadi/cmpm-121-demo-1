@@ -40,7 +40,7 @@ h2 {
   display: inline-block;
   font-size: 6em;
   margin: 0.3em;
-  cursor: pointer;
+  cursor: url("/resource/notes.png"), auto; /* Inspired by: https://github.com/6YuQing6/cat-fishing-cmpm121-demo1/blob/main/src/style.css */
 }
 
 #app {
