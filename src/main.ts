@@ -25,15 +25,16 @@ const growthRate = document.createElement("div");
 growthRate.innerHTML = `<font size = "6">(${growthMult} beats/second)</font>`;
 app.append(growthRate);
 
-beatButton.addEventListener("click", () => {
-  beatButton.classList.add("shake"); // Inspired by: https://github.com/rozy-dixon/cmpm-121-demo-1/blob/main/src/main.ts
+beatButton.addEventListener("click", (e) => {
+  e.stopPropagation();
+  beatButton.style.animation = "shake 0.1s"; // Inspired by: https://github.com/rozy-dixon/cmpm-121-demo-1/blob/main/src/main.ts
+
+  beatButton.addEventListener("animationend", () => {
+    beatButton.style.animation = "none";
+  }, { once: true });
 
   counter++;
   beats.innerHTML = `<font size = "6">${counter} Beats</font>`;
-
-  setTimeout(() => {
-    beatButton.classList.remove("shake");
-  }, 200);
 });
 
 interface Item {
